@@ -138,13 +138,13 @@ public:
             cout << "\n   👀 Current List: NULL (Empty) 🏜️" << endl;
             return;
         }
-        cout << "\n   👀 Current List: 🏁 NULL <-> ";
+        cout << "\n   👀 Current List:  NULL <-> ";
         Node* temp = head;
         while (temp) {
-            cout << "💎[" << temp->data << "] <-> ";
+            cout << "[" << temp->data << "] <-> ";
             temp = temp->next;
         }
-        cout << "NULL 🏁" << endl;
+        cout << "NULL " << endl;
     }
 };
 
