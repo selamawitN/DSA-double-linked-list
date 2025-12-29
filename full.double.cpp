@@ -3,7 +3,6 @@
 
 using namespace std;
 
-// Structure for a Doubly Linked List Node
 struct Node {
     int data;
     Node* next;
@@ -20,7 +19,6 @@ private:
 public:
     DoublyLinkedList() : head(nullptr), tail(nullptr) {}
 
-    // 4. Insertion at Start
     void insertStart(int val) {
         Node* newNode = new Node(val);
         if (!head) {
@@ -30,10 +28,9 @@ public:
             head->prev = newNode;
             head = newNode;
         }
-        cout << "   ✨ [Success] " << val << " added to the START! 📥\n";
+        cout << "   [Success] " << val << " added to the START!\n";
     }
 
-    // 6. Insertion at the End
     void insertEnd(int val) {
         Node* newNode = new Node(val);
         if (!tail) {
@@ -43,15 +40,20 @@ public:
             tail->next = newNode;
             tail = newNode;
         }
-        cout << "   ✅ [Success] " << val << " added to the END! 📥\n";
+        cout << "   [Success] " << val << " added to the END!\n";
     }
 
-    // 5. Insertion at Specified Position
     void insertAtPosition(int val, int pos) {
-        if (pos <= 1) {
+        if (pos < 1) {
+            cout << "   [Error] Position must be 1 or greater!\n";
+            return;
+        }
+        
+        if (pos == 1) {
             insertStart(val);
             return;
         }
+        
         Node* temp = head;
         for (int i = 1; temp != nullptr && i < pos - 1; i++) {
             temp = temp->next;
@@ -65,18 +67,17 @@ public:
             newNode->prev = temp;
             temp->next->prev = newNode;
             temp->next = newNode;
-            cout << "   🎯 [Success] " << val << " placed at position " << pos << "! 📥\n";
+            cout << "   [Success] " << val << " placed at position " << pos << "!\n";
         }
     }
 
-    // 1. Deletion at Start
     void deleteStart() {
         if (!head) {
-            cout << "   ❌ [Error] List is empty! ⚠️\n";
+            cout << "   [Error] List is empty!\n";
             return;
         }
         Node* temp = head;
-        cout << "   🗑️ [Success] Removed " << head->data << " from the START! 📤\n";
+        cout << "   [Success] Removed " << head->data << " from the START!\n";
         if (head == tail) {
             head = tail = nullptr;
         } else {
@@ -86,14 +87,13 @@ public:
         delete temp;
     }
 
-    // 3. Deletion at the End
     void deleteEnd() {
         if (!tail) {
-            cout << "   ❌ [Error] List is empty! ⚠️\n";
+            cout << "   [Error] List is empty!\n";
             return;
         }
         Node* temp = tail;
-        cout << "   🗑️ [Success] Removed " << tail->data << " from the END! 📤\n";
+        cout << "   [Success] Removed " << tail->data << " from the END!\n";
         if (head == tail) {
             head = tail = nullptr;
         } else {
@@ -103,23 +103,29 @@ public:
         delete temp;
     }
 
-    // 2. Deletion at Specified Position
     void deleteAtPosition(int pos) {
         if (!head) {
-            cout << "   ❌ [Error] List is empty! ⚠️\n";
+            cout << "   [Error] List is empty!\n";
             return;
         }
+        
+        if (pos < 1) {
+            cout << "   [Error] Position must be 1 or greater!\n";
+            return;
+        }
+        
         if (pos == 1) {
             deleteStart();
             return;
         }
+        
         Node* temp = head;
         for (int i = 1; temp != nullptr && i < pos; i++) {
             temp = temp->next;
         }
 
         if (!temp) {
-            cout << "   ❌ [Error] Position out of bounds! ⚠️\n";
+            cout << "   [Error] Position out of bounds!\n";
             return;
         }
         if (temp == tail) {
@@ -129,62 +135,62 @@ public:
 
         temp->prev->next = temp->next;
         temp->next->prev = temp->prev;
-        cout << "   🗑️ [Success] Removed " << temp->data << " from position " << pos << "! 📤\n";
+        cout << "   [Success] Removed " << temp->data << " from position " << pos << "!\n";
         delete temp;
     }
 
     void display() {
         if (!head) {
-            cout << "\n   👀 Current List: NULL (Empty) 🏜️" << endl;
+            cout << "\n   Current List: (Empty)" << endl;
             return;
         }
-        cout << "\n   👀 Current List:  NULL <-> ";
+        cout << "\n   Current List: ";
         Node* temp = head;
         while (temp) {
-            cout << "[" << temp->data << "] <-> ";
+            cout << "[" << temp->data << "]";
+            if (temp->next) {
+                cout << " <-> ";
+            }
             temp = temp->next;
         }
-        cout << "NULL " << endl;
+        cout << endl;
     }
 };
 
 int main() {
     DoublyLinkedList dll;
     int choice, val, pos, total;
-
     cout << "=================================================" << endl;
-    cout << "   🌈 DOUBLY LINKED LIST SYSTEM 🌈      " << endl;
+    cout << "   🌈  DOUBLY LINKED LIST SYSTEM 🌈      " << endl;
     cout << "=================================================" << endl;
 
-    // Phase 1: Interactive Initial Setup
-    cout << " 💭 First, how many numbers would you like to enter? ";
+    cout << "💭  First, how many numbers would you like to enter? ";
     cin >> total;
     
     if (total > 0) {
         for (int i = 1; i <= total; i++) {
             if (i == 1) {
-                cout << "\n 1️⃣  Enter the 1st number: ";
+                cout << "\n Enter the 1st number: ";
             } else if (i == total) {
-                cout << "\n 🏁 Finally, enter the last number: ";
+                cout << "\n Finally, enter the last number: ";
             } else {
-                cout << "\n ➡️  Enter the next number: ";
+                cout << "\n Enter the next number: ";
             }
             
             cin >> val;
-            dll.insertEnd(val); // Added to the end
+            dll.insertEnd(val);
             
             if (i == total) {
-                cout << "   🎉 [Success] Setup complete! All numbers stored. ⭐\n";
+                cout << "   [Success] Setup complete! All numbers stored.\n";
             }
         }
     }
 
-    // Phase 2: Menu System
     while (true) {
         cout << "\n-------------------------------------------------" << endl;
-        cout << " 1. 🗑️  Delete Start    2. 🗑️  Delete Pos     3. 🗑️  Delete End" << endl;
-        cout << " 4. 📥  Insert Start    5. 📥  Insert Pos     6. 📥  Insert End" << endl;
-        cout << " 7. 👁️  Display List     8. 🚪  Exit" << endl;
+        cout << " 1. Delete Start    2. Delete Pos     3. Delete End" << endl;
+        cout << " 4. Insert Start    5. Insert Pos     6. Insert End" << endl;
+        cout << " 7. Display List     8. Exit" << endl;
         cout << "-------------------------------------------------" << endl;
         cout << " 🤔 Choose an operation (1-8): ";
         cin >> choice;
@@ -192,32 +198,32 @@ int main() {
         switch (choice) {
             case 1: dll.deleteStart(); break;
             case 2:
-                cout << " 📍 Enter position to delete: ";
+                cout << " Enter position to delete: ";
                 cin >> pos;
                 dll.deleteAtPosition(pos);
                 break;
             case 3: dll.deleteEnd(); break;
             case 4:
-                cout << " 💎 Enter value to insert: ";
+                cout << " Enter value to insert: ";
                 cin >> val;
                 dll.insertStart(val);
                 break;
             case 5:
-                cout << " 💎 Enter value: "; cin >> val;
-                cout << " 📍 Enter position: "; cin >> pos;
+                cout << " Enter value: "; cin >> val;
+                cout << " Enter position: "; cin >> pos;
                 dll.insertAtPosition(val, pos);
                 break;
             case 6:
-                cout << " 💎 Enter value to insert: ";
+                cout << " Enter value to insert: ";
                 cin >> val;
                 dll.insertEnd(val);
                 break;
             case 7: dll.display(); break;
             case 8:
-                cout << "\n 👋 Exiting... Have a wonderful day! love ❤️\n" << endl;
+                cout << "\n Exiting... Have a wonderful day!\n" << endl;
                 return 0;
             default:
-                cout << " ⚠️  [!] Invalid choice. Please pick between 1 and 8." << endl;
+                cout << " [!] Invalid choice. Please pick between 1 and 8." << endl;
         }
     }
 
